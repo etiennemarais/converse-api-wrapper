@@ -13,13 +13,12 @@
   "type": "project",
   "require": {
     "phpunit/phpunit": "~4.0",
-    "jyggen/curl": "4.0.*@dev",
-    "fzaninotto/faker": "1.5.*@dev",
-    "mockery/mockery": "0.9.*@dev"
+    "jyggen/curl": "4.0.*@dev"
   },
   "autoload": {
     "psr-4": {
-      "ConverseApi\\": "src/"
+      "ConverseApi\\": "src/",
+      "ConverseApi\\Tests\\": "tests/"
     }
   },
   "minimum-stability": "dev"

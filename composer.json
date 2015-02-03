@@ -1,0 +1,26 @@
+{
+  "name": "converseapp/api",
+  "description": "Connecting your site to the converse content engine",
+  "keywords": ["Converse", "Api", "Wrapper"],
+  "authors": [
+    {
+      "name": "Etienne Wilhelm Marais",
+      "email": "info@converseapp.co",
+      "role": "Developer"
+    }
+  ],
+  "license": "GPL4",
+  "type": "project",
+  "require": {
+    "phpunit/phpunit": "~4.0",
+    "jyggen/curl": "4.0.*@dev",
+    "fzaninotto/faker": "1.5.*@dev",
+    "mockery/mockery": "0.9.*@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "ConverseApi\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}

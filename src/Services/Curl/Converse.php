@@ -80,7 +80,6 @@ class Converse
      *
      * @return mixed
      * @throws UserNotAuthorizedException
-     * @throws \Jyggen\Curl\Exception\CurlErrorException
      */
     protected function getResponse($verb, $resource, array $data = array())
     {
@@ -97,7 +96,7 @@ class Converse
         $responses = $this->getRequestContent($dispatcher);
 
         if ($responses[0]->getStatusCode() === 401) {
-            throw new UserNotAuthorizedException($resource[0]);
+            throw new UserNotAuthorizedException();
         }
 
         return json_decode($responses[0]->getContent());

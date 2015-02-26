@@ -12,6 +12,19 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('http://httpbin.org/get', $response->url);
     }
 
+    public function testGetResourceWithUnauthorizedCode()
+    {
+        $this->setExpectedException(
+            'ConverseApi\Exceptions\UserNotAuthorizedException',
+            'User not authorized'
+        );
+        $response = Converse::make()->get('http://httpbin.org/status/401');
+
+        $this->assertSame(JSON_ERROR_NONE, json_last_error());
+        $this->assertSame('http://httpbin.org/status/401', $response->url);
+        $this->assertEquals(401, $response->getStatusCode());
+    }
+
     public function testGetResourceWithHeaders()
     {
         $headers = array(
@@ -112,4 +125,6 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
         $headers = (array)$response->headers;
         $this->assertSame('someAuthTokenPost', $headers['X-Auth-Token']);
     }
+
+
 }

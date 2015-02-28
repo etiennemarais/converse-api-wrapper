@@ -183,7 +183,7 @@ class Converse
                 $this->prepareGetRequest($request);
                 break;
             case 'POST':
-                $this->preparePostRequest($request, $data);
+                $this->preparePostRequest($request, json_encode($data));
                 break;
             case 'PUT':
                 $this->preparePutRequest($request, $data);

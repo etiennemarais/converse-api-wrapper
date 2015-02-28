@@ -94,21 +94,8 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testPostResource()
     {
-        $data = array(
-            'email' => 'test@test.com',
-            'name' => 'Firstname',
-        );
-        $response = Converse::make()->post('http://httpbin.org/post', $data);
-
-        $this->assertSame(JSON_ERROR_NONE, json_last_error());
-        $this->assertSame('http://httpbin.org/post', $response->url);
-        $this->assertSame($data, (array)$response->form);
-    }
-
-    public function testPostResourceWithHeaders()
-    {
         $headers = array(
-            array('X-Auth-Token:someAuthTokenPost'),
+            array('Content-Type:application/json'),
         );
 
         $data = array(
@@ -120,11 +107,6 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(JSON_ERROR_NONE, json_last_error());
         $this->assertSame('http://httpbin.org/post', $response->url);
-        $this->assertSame($data, (array)$response->form);
-
-        $headers = (array)$response->headers;
-        $this->assertSame('someAuthTokenPost', $headers['X-Auth-Token']);
+        $this->assertSame(json_encode($data), $response->data);
     }
-
-
 }

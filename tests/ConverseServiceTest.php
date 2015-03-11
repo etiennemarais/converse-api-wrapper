@@ -28,7 +28,7 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetResourceWithHeaders()
     {
         $headers = array(
-            array('X-Auth-Token:someAuthToken'),
+            'X-Auth-Token' => 'someAuthToken',
         );
 
         $response = Converse::make()
@@ -53,7 +53,7 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
     public function testDeleteResourceWithHeaders()
     {
         $headers = array(
-            array('X-Auth-Token:someAuthTokenDelete'),
+            'X-Auth-Token' => 'someAuthTokenDelete',
         );
 
         $response = Converse::make()
@@ -78,7 +78,7 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
     public function testPutResourceWithHeaders()
     {
         $headers = array(
-            array('X-Auth-Token:someAuthTokenPut'),
+            'X-Auth-Token' => 'someAuthTokenPut',
         );
 
         $response = Converse::make()
@@ -95,7 +95,7 @@ class ConverseCurlServiceTest extends \PHPUnit_Framework_TestCase
     public function testPostResource()
     {
         $headers = array(
-            array('Content-Type:application/json'),
+            'Content-Type' => 'application/json',
         );
 
         $data = array(

@@ -1,5 +1,7 @@
 <?php namespace ConverseApi\Services\Curl;
 
+use ConverseApi\Exceptions\ConverseApiException;
+use ConverseApi\Exceptions\RequestValidationException;
 use ConverseApi\Exceptions\UserNotAuthorizedException;
 use Jyggen\Curl\Dispatcher;
 use Jyggen\Curl\Request;
@@ -79,6 +81,7 @@ class Converse
      * @param array $data
      *
      * @return mixed
+     * @throws RequestValidationException
      * @throws UserNotAuthorizedException
      */
     protected function getResponse($verb, $resource, array $data = array())
@@ -95,9 +98,7 @@ class Converse
 
         $responses = $this->getRequestContent($dispatcher);
 
-        if ($responses[0]->getStatusCode() === 401) {
-            throw new UserNotAuthorizedException();
-        }
+        $this->checkResponseForErrors($responses);
 
         return json_decode($responses[0]->getContent());
     }
@@ -161,8 +162,8 @@ class Converse
      */
     protected function setRequestHeaders($request)
     {
-        foreach ($this->headers as $header) {
-            $request->setOption(CURLOPT_HTTPHEADER, $header);
+        foreach ($this->headers as $header => $value) {
+            $request->headers->set($header, $value);
         }
 
         $request->setOption(CURLOPT_FOLLOWLOCATION, true);
@@ -205,5 +206,29 @@ class Converse
             $responses[] = $request->getResponse();
         }
         return $responses;
+    }
+
+    /**
+     * @param $responses
+     *
+     * @throws ConverseApiException
+     * @throws RequestValidationException
+     * @throws UserNotAuthorizedException
+     */
+    protected function checkResponseForErrors($responses)
+    {
+        switch($responses[0]->getStatusCode()) {
+            case 400:
+                throw new RequestValidationException();
+                break;
+            case 401:
+                throw new UserNotAuthorizedException();
+                break;
+            case 200:
+                // Do nothing, no errors
+                break;
+            default:
+                throw new ConverseApiException($responses[0]->getStatusCode());
+        }
     }
 }

@@ -9,7 +9,7 @@
       "role": "Developer"
     }
   ],
-  "license": "GPL4",
+  "license": "GPL3",
   "type": "project",
   "require": {
     "phpunit/phpunit": "~4.0",

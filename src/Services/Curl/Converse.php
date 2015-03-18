@@ -3,8 +3,6 @@
 use ConverseApi\Exceptions\ConverseApiException;
 use ConverseApi\Exceptions\RequestValidationException;
 use ConverseApi\Exceptions\UserNotAuthorizedException;
-use Jyggen\Curl\Dispatcher;
-use Jyggen\Curl\Request;
 
 class Converse
 {
@@ -86,7 +84,7 @@ class Converse
      */
     protected function getResponse($verb, $resource, array $data = array())
     {
-        $dispatcher = new Dispatcher();
+        $dispatcher = new RequestDispatcher();
         $request = new Request($resource);
 
         $this->setRequestHeaders($request);

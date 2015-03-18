@@ -5,17 +5,17 @@ use ConverseApi\Services\Curl\Contracts\Request as RequestContract;
 class Response extends \Symfony\Component\HttpFoundation\Response
 {
     /**
-     * Forge a new object based on a request.
-     * @param  RequestContract $request
-     * @return Response
+     * @param RequestContract $request
+     *
+     * @return static
      */
     public static function forge(RequestContract $request)
     {
         $headerSize = $request->getInfo(CURLINFO_HEADER_SIZE);
-        $response   = $request->getRawResponse();
-        $content    = (strlen($response) === $headerSize) ? '' : substr($response, $headerSize);
+        $response = $request->getRawResponse();
+        $content = (strlen($response) === $headerSize) ? '' : substr($response, $headerSize);
         $rawHeaders = rtrim(substr($response, 0, $headerSize));
-        $headers    = array();
+        $headers = array();
 
         foreach (preg_split('/(\\r?\\n)/', $rawHeaders) as $header) {
             if ($header) {
@@ -33,7 +33,7 @@ class Response extends \Symfony\Component\HttpFoundation\Response
         unset($headers[0]);
 
         foreach ($headers as $header) {
-            list($key, $value)     = explode(': ', $header);
+            list($key, $value) = explode(': ', $header);
             $headerBag[trim($key)] = trim($value);
         }
 
